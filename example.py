@@ -19,12 +19,15 @@ def main():
             },
             {
                 "name": "production"
+            },
+            {
+                "name": "test"
             }
         ],
         "size": [10, 9000]
     }
     pictures = {
-        "example/model.jpg": "example/image.jpg"
+        "p1": "example/image.jpg"
     }
 
     data = {

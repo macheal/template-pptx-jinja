@@ -52,18 +52,28 @@ class PPTXRendering:
 
     def _render_picture(self, shape):
         for picture in self.pictures:
-            if pictures.get_hash(picture) == shape.image.sha1:
+            if picture == shape.name:
                 pictures.replace_img_slide(
                     self.current_slide, shape, self.pictures[picture]
                 )
-
     def _render_text_frame(self, text_frame):
-        for paragraph in text_frame.paragraphs:
-            self._render_paragraph(paragraph)
+        template = self.env.from_string(str(text_frame.text))
+        try:
+            rendered = template.render(self.model)
+        except exceptions.UndefinedError as error:
+            self.message += str(error) + '\n'
+        except exceptions.TemplateSyntaxError as error:
+            self.message += str(error) + \
+                '\nyou should re-write the whole {{}} tag\n'
+        else:
+            text_frame.text = rendered
+    #def _render_text_frame(self, text_frame):
+        # for paragraph in text_frame.paragraphs:
+        #     self._render_paragraph(paragraph)
 
-    def _render_paragraph(self, paragraph):
-        for run in paragraph.runs:
-            self._render_run(run)
+    # def _render_paragraph(self, paragraph):
+    #     for run in paragraph.runs:
+    #         self._render_run(run)
 
     def _render_table(self, table):
         for cell in table.iter_cells():
@@ -86,3 +96,5 @@ class PPTXRendering:
                 '\nyou should re-write the whole {{}} tag\n'
         else:
             run.text = rendered
+
+
