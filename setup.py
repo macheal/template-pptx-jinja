@@ -6,14 +6,14 @@ def read(filename):
         return myfile.read()
 
 
-setup(name='template-pptx-jinja',
-    version="0.2.0",
+setup(name='template-pptx-jinja-my',
+    version="0.0.1",
     description='PowerPoint presentation builder from template using Jinja2',
     long_description=read('readme.md'),
     long_description_content_type='text/markdown',
-    url='https://github.com/Thykof/template-pptx-jinja',
-    author='Thykof',
-    author_email='thykof@protonmail.ch',
+    url='https://github.com/macheal/template-pptx-jinja',
+    author='macheal',
+    author_email='xinyukc01@icloud.com',
     install_requires=read('requirements.txt').split(),
     license='',
     packages=find_packages(),
