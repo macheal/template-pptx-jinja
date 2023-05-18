@@ -7,7 +7,7 @@ def read(filename):
 
 
 setup(name='template-pptx-jinja-my',
-    version="0.0.1",
+    version="0.0.2",
     description='PowerPoint presentation builder from template using Jinja2',
     long_description=read('readme.md'),
     long_description_content_type='text/markdown',
