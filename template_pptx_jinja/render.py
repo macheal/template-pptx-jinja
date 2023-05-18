@@ -70,6 +70,9 @@ class PPTXRendering:
             self._render_cell(cell)
 
     def _render_cell(self, cell):
+        # cell.text_frame.text  Size {% for row in sizeList %}
+        # Size 
+        # {% for row in sizeList %} ->_render_run()
         self._render_text_frame(cell.text_frame)
 
     def _render_run(self, run):

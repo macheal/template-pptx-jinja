@@ -1,2 +1,2 @@
-jinja2
-python-pptx
+jinja2==3.1.2
+python-pptx==0.6.21
