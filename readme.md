@@ -8,7 +8,7 @@ It can also replace picture.
 
 See `example.py` for example.
 
-See the PyPI package at https://pypi.org/project/template-pptx-jinja-my/0.0.1
+See the PyPI package at https://pypi.org/project/template-pptx-jinja-my/0.0.3
 
 ## Install
 
@@ -21,3 +21,4 @@ Run
     python3 -m venv env
     source env/bin/activate
     pip install -r requirements.txt
+
