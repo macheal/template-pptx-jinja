@@ -19,12 +19,15 @@ def main():
             },
             {
                 "name": "production"
+            },
+            {
+                "name": "test"
             }
         ],
-        "size": [10, 9000]
+        "relationship_size": [{"name":"张三","size":"10"},{"name":"李四","size":"1000"},{"name":"王五","size":"2000"}]
     }
     pictures = {
-        "example/model.jpg": "example/image.jpg"
+        "p1": "example/image.jpg"
     }
 
     data = {

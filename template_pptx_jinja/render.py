@@ -1,12 +1,10 @@
 from  jinja2 import exceptions, Environment
 
-
 from pptx import Presentation
 from pptx.enum.shapes import MSO_SHAPE_TYPE
-from pptx.parts.image import Image
-
 
 from template_pptx_jinja import pictures
+import templatepptx
 
 
 class PPTXRendering:
@@ -35,6 +33,9 @@ class PPTXRendering:
             self.current_slide = slide
             self._render_slide(slide)
         ppt.save(self.output_path)
+        powerpoint = templatepptx.templatePptx(self.output_path, self.model, self.output_path, "$")
+        # Parses and exports the PowerPoint with filled out values and pictures
+        powerpoint.parse_template_pptx()
         return self.message
 
     def _render_slide(self, slide):
@@ -52,31 +53,12 @@ class PPTXRendering:
 
     def _render_picture(self, shape):
         for picture in self.pictures:
-            if pictures.get_hash(picture) == shape.image.sha1:
+            if picture == shape.name:
                 pictures.replace_img_slide(
                     self.current_slide, shape, self.pictures[picture]
                 )
-
     def _render_text_frame(self, text_frame):
-        for paragraph in text_frame.paragraphs:
-            self._render_paragraph(paragraph)
-
-    def _render_paragraph(self, paragraph):
-        for run in paragraph.runs:
-            self._render_run(run)
-
-    def _render_table(self, table):
-        for cell in table.iter_cells():
-            self._render_cell(cell)
-
-    def _render_cell(self, cell):
-        # cell.text_frame.text  Size {% for row in sizeList %}
-        # Size 
-        # {% for row in sizeList %} ->_render_run()
-        self._render_text_frame(cell.text_frame)
-
-    def _render_run(self, run):
-        template = self.env.from_string(str(run.text))
+        template = self.env.from_string(str(text_frame.text))
         try:
             rendered = template.render(self.model)
         except exceptions.UndefinedError as error:
@@ -85,4 +67,13 @@ class PPTXRendering:
             self.message += str(error) + \
                 '\nyou should re-write the whole {{}} tag\n'
         else:
-            run.text = rendered
+            text_frame.text = rendered
+
+    def _render_table(self, table):
+        for cell in table.iter_cells():
+            self._render_cell(cell)
+
+    def _render_cell(self, cell):
+        self._render_text_frame(cell.text_frame)
+
+
