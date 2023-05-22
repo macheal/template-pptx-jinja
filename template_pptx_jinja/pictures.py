@@ -2,6 +2,7 @@ import hashlib
 
 
 from PIL import Image
+from pptx.util import Inches
 
 
 def get_hash(filename):
@@ -13,14 +14,16 @@ def get_hash(filename):
 # See https://github.com/scanny/python-pptx/issues/116
 def replace_img_slide(slide, img, img_path):
     # Replace the picture in the shape object (img) with the image in img_path.
-
+    
     imgPic = img._pic
     imgRID = imgPic.xpath('./p:blipFill/a:blip/@r:embed')[0]
-    imgPart = slide.part.related_parts[imgRID]
-    #imgPart = slide.part.get_image(imgRID)
+    imgPart = slide.part.related_part(imgRID)
 
     with open(img_path, 'rb') as f:
         rImgBlob = f.read()
 
     # replace
     imgPart._blob = rImgBlob
+
+
+
